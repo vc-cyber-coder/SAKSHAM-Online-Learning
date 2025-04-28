@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
-import { compare } from "bcrypt"
+import { compare } from "bcryptjs"
 import clientPromise from "@/lib/mongodb"
 
 export const authOptions = {
@@ -24,7 +24,7 @@ export const authOptions = {
         }
 
         const client = await clientPromise
-        const usersCollection = client.db("saksham").collection("users")
+        const usersCollection = client.db("Saksham_DataBase").collection("Users")
 
         const user = await usersCollection.findOne({
           email: credentials.email,

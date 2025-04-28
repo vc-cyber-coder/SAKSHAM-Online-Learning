@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { hash } from "bcrypt"
+import { hash } from "bcryptjs"
 import clientPromise from "@/lib/mongodb"
 
 export async function POST(req: Request) {
@@ -12,10 +12,10 @@ export async function POST(req: Request) {
     }
 
     const client = await clientPromise
-    const db = client.db("saksham")
+    const db = client.db("Saksham_DataBase")
 
     // Check if user already exists
-    const existingUser = await db.collection("users").findOne({ email })
+    const existingUser = await db.collection("Users").findOne({ email })
 
     if (existingUser) {
       return NextResponse.json({ error: "User already exists" }, { status: 409 })
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     const hashedPassword = await hash(password, 10)
 
     // Create the user
-    const result = await db.collection("users").insertOne({
+    const result = await db.collection("Users").insertOne({
       name,
       email,
       password: hashedPassword,
